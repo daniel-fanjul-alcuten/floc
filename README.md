@@ -7,8 +7,9 @@ Main features:
 
 1. Simple: specialized replaceable processes using clean interfaces.
 1. Distributed: client server architecture.
+1. Performant: optimized for data safety and speed.
 1. Deduplicating: data and metadata is deduplicated.
-1. Performant: optimized for data safety and performance.
+1. Incremental: backups are incrementally made but data is non-incrementally stored.
 
 Current state
 =============
@@ -32,6 +33,8 @@ Each Server includes a client for configuration purposes:
 
 The files and metadata of a single backup are called an `Archive`. A group of `Archives` is called a `Vault`. `Vaults` are identified by a string. `Archives` belong to one `Vault` and are identified by that `Vault` and a timestamp.
 
+A backup is performed incrementally, but the `Archive` stores the full view, effectively being a full backup. Backups can be frequent without sacrificing space because of the deduplication.
+
 If a backup is interrupted then `Archives` are flagged as incomplete.
 
 A stream or file of JSON documents that contain file metadata like name, type, ownership, permissions, timestamps, and path on the disk but does not include contents or extended attributes is called a `Catalog`.
@@ -40,8 +43,8 @@ The Clients that perform the actual backup and restore on any Server are:
 
 1. `floc-read`: reads the file system and generates a `Catalog`.
 1. `floc-upload`: reads a `Catalog`, partitions the contents and extended attributes of a file in chunks, deduplicates the chunks, sends only the new chunks to a Server, effectively creating an new `Archive` in the Server.
-1. `floc-vault`: browses vaults of a Server.
-1. `floc-archive`: browses archives of a Server.
+1. `floc-vault`: browses `Vaults` of a Server.
+1. `floc-archive`: browses `Archives` of a Server.
 1. `floc-download`: receives from a Server a `Catalog` extended with the ids of the contents and extended attributes of the files.
 1. `floc-write`: reads a `Catalog`, downloads the contents of the files and writes them to the file system.
 1. `floc-copy`: copies archives between servers.
