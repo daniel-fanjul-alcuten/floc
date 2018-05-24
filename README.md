@@ -42,7 +42,7 @@ A stream or file of JSON documents that contain file metadata like name, type, o
 The Clients that perform the actual backup and restore on any Server are:
 
 1. `floc-read`: reads the file system and generates a `Catalog`.
-1. `floc-upload`: reads a `Catalog`, partitions the contents and extended attributes of a file in chunks, deduplicates the chunks, sends only the new chunks to a Server, effectively creating an new `Archive` in the Server.
+1. `floc-upload`: reads a `Catalog`, partitions the contents and extended attributes of a file in chunks, deduplicates the chunks, sends only the new chunks to a Server, effectively creating a new `Archive` in the Server.
 1. `floc-vault`: browses `Vaults` of a Server.
 1. `floc-archive`: browses `Archives` of a Server.
 1. `floc-download`: receives from a Server a `Catalog` extended with the ids of the contents and extended attributes of the files.
