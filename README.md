@@ -6,7 +6,7 @@ FLoC is a set of command line tools that can be used together to implement backu
 Main features:
 
 1. Simple: specialized replaceable processes using clean interfaces.
-1. Distributed: client server architecture.
+1. Distributed: client-server architecture.
 1. Performant: optimized for data safety and speed.
 1. Deduplicating: data and metadata is deduplicated.
 1. Incremental: backups are incrementally made but data is non-incrementally stored.
@@ -21,12 +21,12 @@ Architecture
 
 Clients read and write the files to backup and restore and send and receive data to and from the Servers.
 
-Each Server offer the same JSON-RPC v1.0 protocol to their clients through named sockets. There is one Server per backend system that keeps the data. Planned backends:
+Each Server offer the same JSON-RPC v1.0 protocol to their Clients through named sockets. There is one Server per backend system that keeps the data. Planned backends:
 
 1. `floc-leveldb`: storage resides in LevelDB.
 1. `floc-boltdb`: storage resides in BoltDB.
 
-Each Server includes a client for configuration purposes:
+Each Server includes a Client for configuration purposes:
 
 1. `floc-leveldb-admin`: configures a `floc-leveldb` Server.
 1. `floc-boltdb-admin`: configures a `floc-boltdb` Server.
@@ -47,8 +47,8 @@ The Clients that perform the actual backup and restore on any Server are:
 1. `floc-archive`: browses `Archives` of a Server.
 1. `floc-download`: receives from a Server a `Catalog` extended with the ids of the contents and extended attributes of the files.
 1. `floc-write`: reads a `Catalog`, downloads the contents of the files and writes them to the file system.
-1. `floc-copy`: copies archives between servers.
-1. `floc-prunable`: lists archives that may be obsolete according to some policy.
+1. `floc-copy`: copies `Archives` between Servers.
+1. `floc-prunable`: lists `Archives` that may be obsolete according to some policy.
 1. `floc-catalog`: reads a `Catalog` and returns a possibly different one after applying filters and transformations to the file metadata.
 
 Data streams are splitted in chunks of variable size using a simple and fast rolling hash. Chunks are identified and deduplicated by their SHA256, are stored with their 32 bit FVN-1a and with Reed-Solomon erasure code metadata.
