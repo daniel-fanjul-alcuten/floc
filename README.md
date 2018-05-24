@@ -51,6 +51,8 @@ The Clients that perform the actual backup and restore on any Server are:
 1. `floc-prunable`: lists archives that may be obsolete according to some policy.
 1. `floc-catalog`: reads a `Catalog` and returns a possibly different one after applying filters and transformations to the file metadata.
 
+Data streams are splitted in chunks of variable size using a simple and fast rolling hash. Chunks are identified and deduplicated by their SHA256, are stored with their 32 bit FVN-1a and with Reed-Solomon erasure code metadata.
+
 If a backend allows the removal of an `Archive` or a `Vault` then it must support a garbage collection mechanism to free disk storage in a way that chunks are retained only when they are 'reachable' from the remaining `Archives`. If a backend does not allow removals then a combination of `floc-prunable` and `floc-copy` may be used.
 
 Go get them
